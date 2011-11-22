@@ -1,4 +1,4 @@
-name := "lift_blank_for_sbt_0_11_1"
+name := "lift_blank"
 
 scalaVersion := "2.9.1"
 
