@@ -1,3 +1,5 @@
+import com.typesafe.startscript.StartScriptPlugin
+
 name := "lift_blank"
 
 scalaVersion := "2.9.1"
@@ -9,7 +11,13 @@ seq(webSettings: _*)
 // using 0.2.4+ of the sbt web plugin
 scanDirectories in Compile := Nil
 
-//resolvers += "Java.net Maven2 Repository" at "http://download.java.net/maven/2/"
+seq(StartScriptPlugin.startScriptForClassesSettings: _*)
+
+resolvers += "Java.net Maven2 Repository" at "http://download.java.net/maven/2/"
+
+resolvers += "Scala Tools Snapshots" at "http://scala-tools.org/repo-snapshots"
+
+resolvers += "Typesafe Snapshots" at "http://repo.typesafe.com/typesafe/snapshots"
 
 // you can also add multiple repositories at the same time
 resolvers ++= Seq(
@@ -17,9 +25,16 @@ resolvers ++= Seq(
   "Scala Tools Snapshot" at "http://scala-tools.org/repo-snapshots/",
   "Java.net Maven2 Repository" at "http://download.java.net/maven/2/"
 )
-
 // if you have issues pulling dependencies from the scala-tools repositories (checksums don't match), you can disable checksums
 //checksums := Nil
+
+libraryDependencies ++= {
+  val jettyVersion = "8.0.4.v20111024"
+  Seq(
+    "org.eclipse.jetty" % "jetty-server" % jettyVersion % "compile->default",
+    "org.eclipse.jetty" % "jetty-servlet" % jettyVersion % "compile->default"
+  )
+}
 
 libraryDependencies ++= {
   val liftVersion = "2.4-M5" // Put the current/latest lift version here
